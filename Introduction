@@ -30,7 +30,5 @@ With Service Mesh😶‍🌫️
 - Sidecar Security → proxy enforces policies, not the app  
 - Traffic Control → canary, blue/green, traffic split  
 - Auto‑Retries → built‑in reliability  
-
-
 - **Policy Enforcement** → fine‑grained service control  
 - **No Code Changes** → all features without modifying apps  
