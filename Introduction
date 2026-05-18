@@ -1,5 +1,5 @@
 Service Mesh:: 
-    To understand Service Mesh, you must first understand Kubernetes architecture, how pods communicate, and why Kubernetes was introduced — mainly to orchestrate containers, scale workloads, and manage               distributed systems.
+   To understand Service Mesh, you must first understand Kubernetes architecture, how pods communicate, and why Kubernetes was introduced — mainly to orchestrate containers, scale workloads, and manage               distributed systems.
     But Kubernetes does NOT solve secure, reliable, observable service‑to‑service communication.
     That’s where Service Mesh comes in.!!!!
 
@@ -32,3 +32,8 @@ With Service Mesh😶‍🌫️
 - Auto‑Retries → built‑in reliability  
 - **Policy Enforcement** → fine‑grained service control  
 - **No Code Changes** → all features without modifying apps  
+
+***
+![Linkerd](images/linkerd.png)
+
+
