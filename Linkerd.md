@@ -32,3 +32,6 @@ metadata:
     linkerd.io/inject: "enabled"
 
 Redeploy the app.
+
+wait for sometime and you should see all pods up and running 
+![Linkerd](images/LInkerd1.png)
