@@ -33,8 +33,15 @@ With Service Mesh😶‍🌫️
 - **Policy Enforcement** → fine‑grained service control  
 - **No Code Changes** → all features without modifying apps  
 
-***
 ![Linkerd](images/image.png)
 
+ It injects a tiny Rust-based proxy into each pod, and this proxy handles encryption, routing, retries, and health checks
 
+• Every pod gets a sidecar proxy. 
+• Proxy handles mTLS, retries, timeouts, load balancing
+• Application container → talks to proxy → proxy talks to other proxies
+• Control plane manages certificates and identity
+• No app code changes required
+No YAML changes required except enabling injection. 
 
+     
