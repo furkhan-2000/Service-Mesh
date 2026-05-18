@@ -34,6 +34,7 @@ With Service Mesh😶‍🌫️
 - **No Code Changes** → all features without modifying apps  
 
 ***
-![Linkerd](images/linkerd.png)
+![Linkerd](images/image.png)
+
 
 
