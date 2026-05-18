@@ -61,3 +61,202 @@ the main diff b/w is
 | Needs bigger nodes | Runs on small nodes easily 
 
 ![Linkerd](images/diff.png)
+
+Linkerd:: 
+
+Linkerd Sidecar Flow
+
+### **Step‑by‑Step**
+1. Each pod gets a tiny Rust proxy (sidecar).
+2. App sends traffic → local sidecar.
+3. Sidecar encrypts using mTLS.
+4. Encrypted traffic → destination sidecar.
+5. Destination sidecar decrypts → sends to app.
+
+### **One‑Line Flow**
+**App → Sidecar → Encrypted → Sidecar → App**
+
+---
+
+# ⭐ **What the Linkerd Sidecar Actually Does**
+| Step | What Happens |
+|------|--------------|
+| **1. Encrypts** | Sidecar encrypts all outgoing traffic (mTLS). |
+| **2. Sends to proxy** | Traffic goes to the **other pod’s sidecar**, not directly to the app. |
+| **3. Decrypts** | Destination sidecar decrypts and forwards to the app. |
+
+---
+
+# ⭐ **Is it a central proxy?**
+**❌ No.**  
+Every pod has **its own** tiny proxy → that’s why it’s called **sidecar**, not gateway.
+
+Got you, Furkhan — here is the **cleanest, tightest, production‑grade, no‑fluff condensation** of EVERYTHING you wrote.  
+All sections rewritten into **short, sharp, structured blocks** you can directly paste into your docs.
+
+---
+
+# ⭐ **Pod Structure (Concise)**
+
+**Pod = App Container + Sidecar Proxy**
+
+**Sidecar handles:**
+- mTLS  
+- Retries  
+- Timeouts  
+- Traffic routing  
+- Observability  
+
+---
+
+# ⭐ **Traffic Flow (Concise)**
+
+**Service A App → Local Sidecar → (mTLS Encrypted) → Remote Sidecar → Service B App**
+
+**Key Point:**  
+**Apps never talk directly. Only proxies talk.**
+
+---
+
+# ⭐ **mTLS Flow (Concise)**
+
+**Service A Proxy → Verify Identity → Exchange Certs → Create Encrypted Tunnel → Service B Proxy**
+
+**Main Points:**
+- Certificates auto‑generated  
+- Auto‑rotated  
+- No manual TLS  
+- Zero‑trust enforced  
+
+---
+
+# ⭐ **Sidecar Injection Flow (Concise)**
+
+**Deploy App → Namespace Injection Enabled → Mesh Auto‑Injects Sidecar → Pod Starts (App + Proxy)**
+
+---
+
+# ⭐ **Control Plane**
+
+**Components:**
+- Identity Service  
+- Certificate Authority  
+- Proxy Injector  
+- Policy Controller  
+- Destination Service  
+
+**Functions:**
+- Manage certificates  
+- Inject proxies  
+- Enforce policies  
+- Service discovery  
+- Routing rules  
+
+---
+
+# ⭐ **Data Plane**
+
+**Data Plane = All Sidecar Proxies**
+
+Handles:
+- Encryption  
+- Routing  
+- Retries  
+- Timeouts  
+- Metrics  
+
+**All live traffic flows through the data plane.**
+
+---
+
+# ⭐ **Observability Architecture**
+
+```
+        Linkerd
+     ┌────┬────┐
+     │    │    │
+     ▼    ▼    ▼
+Prom   Grafana   Loki
+Metrics Dashboards Logs
+```
+
+---
+
+# ⭐ **Canary Deployment (Concise)**
+
+Mesh Router:
+- 90% → v1  
+- 10% → v2  
+
+Used for:
+- Gradual rollout  
+- Safe deployment  
+- Testing new versions  
+
+---
+
+# ⭐ **Blue‑Green Deployment (Concise)**
+
+**Traffic Router → Blue or Green Environment**  
+Instant switch between environments.
+
+---
+
+# ⭐ **Retry & Timeout Flow**
+
+Request → Success → Return
+Request → Failure → Auto‑Retry → Timeout if exceeded
+
+**No app code needed.**
+
+---
+
+# ⭐ **Circuit Breaking (Concise)**
+
+Service Healthy?  
+- Yes → Route traffic
+- No → Stop traffic to bad pod 
+
+Prevents cascading failures.
+
+----------------------------------------------------------------------------------------------------------------
+
+Install CLI
+    │
+    ▼
+Install Control Plane   
+    │
+    ▼
+Enable Namespace Injection
+    │
+    ▼
+Restart Deployments
+    │
+    ▼
+Sidecars Injected
+    
+    ▼
+mTLS + Routing + Metrics Active
+
+*Real Production Cons Flow*
+More Features
+      │
+      ▼
+More Complexity
+      │
+      ├── Higher RAM
+      ├── Higher CPU
+      ├── Harder Debugging
+      ├── Certificate Issues
+      ├── Upgrade Risks
+      └── Increased Latency              ###  BUT IN THIS LINKERD IT IS MIN
+
+Sidecar Injection  → how to enable it.
+
+Option A: Enable for entire namespace
+
+Option B: Enable for a single pod/deployment
+
+ if you add this to a Deployment/Pod YAML, Linkerd will inject the sidecar into that pod.
+ If you add it to the namespace, then ALL pods in that namespace get the sidecar automatically.
+ If you do NOT add it, nothing happens — no sidecar, no Linkerd.
