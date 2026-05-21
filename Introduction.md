@@ -44,4 +44,50 @@ With Service Mesh😶‍🌫️
 • No app code changes required
 No YAML changes required except enabling injection. 
 
-     
+---
+
+# **Istio vs Linkerd — STRICT mTLS**
+
+In Istio, STRICT mTLS is **not enabled by default**, so you must explicitly enforce it using a `PeerAuthentication` policy. This ensures all service‑to‑service traffic inside the mesh is encrypted and authenticated through Envoy sidecars. Linkerd, on the other hand, does **not require any YAML or policy** to enable mTLS — it automatically enforces strong, identity‑based mTLS for all meshed workloads by default. That means the STRICT mTLS YAML you wrote is **only for Istio**, and should **never** be applied in a Linkerd environment. Linkerd already provides secure, automatic, always‑on mTLS without extra configuration.
+
+---
+
+### **Istio**
+- mTLS is **not strict by default**  
+- You **must** apply a `PeerAuthentication` policy  
+- STRICT mode enforces encrypted + authenticated traffic  
+- Uses Envoy + Istio security CRDs  
+- YAML required:
+
+```yaml
+apiVersion: security.istio.io/v1
+kind: PeerAuthentication
+metadata:
+  name: default
+  namespace: istio-system
+spec:
+  mtls:
+    mode: STRICT
+```
+
+---
+
+### **Linkerd**
+- mTLS is **always ON by default**  
+- No YAML needed  
+- No PeerAuthentication, no DestinationRule  
+- Identity + trust anchors handled automatically  
+- Every meshed pod gets automatic TLS  
+- Verified via:
+
+```
+linkerd check
+linkerd viz tap deploy/myapp
+```
+
+---
+
+#  **Final Summary**  
+**STRICT mTLS YAML = ONLY for Istio.  
+Linkerd already enforces mTLS automatically — no config needed.**
+
