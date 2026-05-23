@@ -86,8 +86,27 @@ linkerd viz tap deploy/myapp
 ```
 
 ---
-
-#  **Final Summary**  
+  
 **STRICT mTLS YAML = ONLY for Istio.  
 Linkerd already enforces mTLS automatically — no config needed.**
+---
 
+
+
+- Dynamic admission controller is the mechanism used by Istio for sidecar injection.  
+- When user runs `kubectl create pod/deployment`, request goes to **API Server**.  
+- API Server checks:  
+  - Authentication  
+  - Authorization  
+- Before storing in etcd, **Admission Controllers** run.  
+- Admission controllers can:  
+  - Validate YAML  
+  - Modify YAML (mutation)  
+- Istio uses a **Mutating Admission Webhook**.  
+- If namespace has `istio-injection=enabled` or pod has annotation, API Server calls Istio’s webhook.  
+- Istio sees the pod creation request and injects the **Envoy sidecar** into the pod spec.  
+- Modified pod spec is then stored in etcd and scheduled. 
+
+![flow](images/Screenshot%202026-05-22%20135910.png)
+
+API Server → AuthN/AuthZ → Mutating Webhook (Istio) → Validating Webhook → etcd → Kubelet → Pod (App + Envoy).

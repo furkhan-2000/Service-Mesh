@@ -3,7 +3,7 @@ so now there are 2 dominant mesh:
 * linkerd  
          
 
-# Istio — Production Reality (Heavyweight, Enterprise‑Grade)**  
+# Istio — Production Reality**  
 **What it is:**  
 A full‑featured, enterprise service mesh built for **complex microservices**.
 
@@ -21,11 +21,11 @@ Large enterprises, high‑traffic apps, complex routing, strict security.
 
 ---
 
-#  Linkerd — Production Reality (Lightweight, Fast, Stable)
+#  Linkerd — Production Reality
 **What it is:**  
 A simple, ultra‑light, ultra‑fast service mesh built for **performance and reliability**.
 
-**Real Production Behavior:**  
+**Behavior:**  
 - Uses Rust‑based micro‑proxy → extremely lightweight  
 - Very low CPU/RAM usage → perfect for small/medium clusters  
 - Simple install, simple operations  
@@ -66,14 +66,13 @@ Linkerd::
 
 Linkerd Sidecar Flow
 
-### **Step‑by‑Step**
 1. Each pod gets a tiny Rust proxy (sidecar).
 2. App sends traffic → local sidecar.
 3. Sidecar encrypts using mTLS.
 4. Encrypted traffic → destination sidecar.
 5. Destination sidecar decrypts → sends to app.
 
-### **One‑Line Flow**
+
 **App → Sidecar → Encrypted → Sidecar → App**
 
 ---
@@ -96,7 +95,7 @@ All sections rewritten into **short, sharp, structured blocks** you can directly
 
 ---
 
-# ⭐ **Pod Structure (Concise)**
+# ⭐ **Pod Structure**
 
 **Pod = App Container + Sidecar Proxy**
 
@@ -109,7 +108,7 @@ All sections rewritten into **short, sharp, structured blocks** you can directly
 
 ---
 
-# ⭐ **Traffic Flow (Concise)**
+# ⭐ **Traffic Flow**
 
 **Service A App → Local Sidecar → (mTLS Encrypted) → Remote Sidecar → Service B App**
 
@@ -118,11 +117,10 @@ All sections rewritten into **short, sharp, structured blocks** you can directly
 
 ---
 
-# ⭐ **mTLS Flow (Concise)**
+# ⭐ **mTLS Flow**
 
 **Service A Proxy → Verify Identity → Exchange Certs → Create Encrypted Tunnel → Service B Proxy**
 
-**Main Points:**
 - Certificates auto‑generated  
 - Auto‑rotated  
 - No manual TLS  
@@ -130,7 +128,7 @@ All sections rewritten into **short, sharp, structured blocks** you can directly
 
 ---
 
-# ⭐ **Sidecar Injection Flow (Concise)**
+# ⭐ **Sidecar Injection Flow**
 
 **Deploy App → Namespace Injection Enabled → Mesh Auto‑Injects Sidecar → Pod Starts (App + Proxy)**
 
@@ -182,7 +180,7 @@ Metrics Dashboards Logs
 
 ---
 
-# ⭐ **Canary Deployment (Concise)**
+# ⭐ **Canary Deployment**
 
 Mesh Router:
 - 90% → v1  
@@ -195,7 +193,7 @@ Used for:
 
 ---
 
-# ⭐ **Blue‑Green Deployment (Concise)**
+# ⭐ **Blue‑Green Deployment**
 
 **Traffic Router → Blue or Green Environment**  
 Instant switch between environments.
@@ -211,7 +209,7 @@ Request → Failure → Auto‑Retry → Timeout if exceeded
 
 ---
 
-# ⭐ **Circuit Breaking (Concise)**
+# ⭐ **Circuit Breaking**
 
 Service Healthy?  
 - Yes → Route traffic
